@@ -1,1 +1,6 @@
 /hacky_fix_that_somehow_works.txt
+
+.idea/
+.pytype/
+
+.env
