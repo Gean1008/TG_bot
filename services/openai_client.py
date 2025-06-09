@@ -1,9 +1,7 @@
 import logging
 from http.client import responses
-
 from openai import AsyncOpenAI
 from pyexpat.errors import messages
-
 from config import CHATGPT_TOKEN
 
 logger = logging.getLogger(__name__)
@@ -29,7 +27,7 @@ async def get_random_fact():
         )
 
         fact = response.choices[0].message.content.strip()
-        logger.info(f"{response.choices[0].message.content.strip()}")
+        # logger.info(f"{fact}")
         logger.info("Fact was successfully returned")
         return fact
 

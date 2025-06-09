@@ -1,7 +1,4 @@
 import logging
-from random import random
-from wsgiref.util import application_uri
-
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler
 from config import TG_BOT_TOKEN
 from handlers import basic, random_fact
