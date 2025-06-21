@@ -9,7 +9,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Обработка команды /start"""
     keyboard=[
         [InlineKeyboardButton("🎲 Some random fact",callback_data="random_fact")],
-        [InlineKeyboardButton("🤖 chatGPT(coming soon)", callback_data="gpt_coming_soon")],
+        [InlineKeyboardButton("🤖 chatGPT", callback_data="gpt_client")],
         [InlineKeyboardButton("💬 Chat with celebrity(coming soon)", callback_data="talk_coming_soon")],
         [InlineKeyboardButton("🧠 Quiz(coming soon)", callback_data="quiz_coming_soon")]
     ]
@@ -19,7 +19,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "🎉 <b>Welcome to ChatGpt Bot</b>\n\n"
         "🚀 <b>Available options</b>\n"
         "Random fact - get some random facts\n"
-        "ChatGPT - talk to AI (coming soon)\n"
+        "ChatGPT - talk to AI\n"
         "Chat with Celebrity (coming soon)\n"
         "Quiz - test your knowledge (coming soon)\n\n"
         "Choose your option from menu:"
@@ -34,7 +34,10 @@ async def menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if query.data == "random_fact":
         # This case work in random_fact.py
         pass
-    elif query.data in ["gpt_coming_soon","talk_coming_soon","quiz_coming_soon"]:
+    elif query.data == "gpt_client":
+        # This case work in random_fact.py
+        pass
+    elif query.data in ["talk_coming_soon","quiz_coming_soon"]:
         await query.edit_message_text(
             "<b>Option in progress</b>\n\n",
             parse_mode="HTML"
@@ -48,7 +51,7 @@ async def start_menu_again(query):
     """Returne to home menu /start"""
     keyboard = [
         [InlineKeyboardButton("🎲 Some random fact", callback_data="random_fact")],
-        [InlineKeyboardButton("🤖 chatGPT(coming soon)", callback_data="gpt_coming_soon")],
+        [InlineKeyboardButton("🤖 chatGPT", callback_data="gpt_client")],
         [InlineKeyboardButton("💬 Chat with celebrity(coming soon)", callback_data="talk_coming_soon")],
         [InlineKeyboardButton("🧠 Quiz(coming soon)", callback_data="quiz_coming_soon")]
     ]

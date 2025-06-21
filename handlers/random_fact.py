@@ -62,7 +62,7 @@ async def random_fact_callback(update: Update, context: ContextTypes.DEFAULT_TYP
     elif query.data == "random_finish":
         keyboard = [
             [InlineKeyboardButton("🎲 Some random fact", callback_data="random_fact")],
-            [InlineKeyboardButton("🤖 chatGPT(coming soon)", callback_data="gpt_coming_soon")],
+            [InlineKeyboardButton("🤖 chatGPT", callback_data="gpt_client")],
             [InlineKeyboardButton("💬 Chat with celebrity(coming soon)", callback_data="talk_coming_soon")],
             [InlineKeyboardButton("🧠 Quiz(coming soon)", callback_data="quiz_coming_soon")]
         ]
