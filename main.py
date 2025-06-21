@@ -1,10 +1,12 @@
 import logging
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ConversationHandler, MessageHandler, filters
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler,MessageHandler,filters
 from config import TG_BOT_TOKEN
-from handlers import basic, random_fact, chatgpt_client
+from handlers import basic, random_fact,chat_with_AI,chat_with_celebrity,Quiz_handler,message_router#,meal_counter
 
+
+#Adding basic configuration for log actions in console
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+    format="%(asctime)s - %(name)s -%(levelname)s -%(message)s", level=logging.INFO
 )
 logger = logging.getLogger(__name__)
 
@@ -13,38 +15,32 @@ def main():
         application = Application.builder().token(TG_BOT_TOKEN).build()
 
         application.add_handler(CommandHandler("start", basic.start))
+
         application.add_handler(CommandHandler("random", random_fact.random_fact))
-        application.add_handler(CommandHandler("gpt", chatgpt_client.gpt_command))
+        application.add_handler(CallbackQueryHandler(random_fact.random_fact_callback, pattern="random_"))
 
-        gpt_conversation = ConversationHandler(
-            entry_points=[CallbackQueryHandler(chatgpt_client.gpt_start, pattern="^gpt_client$")],
-            states={
-                chatgpt_client.WAITING_FOR_MESSAGE: [
-                    MessageHandler(filters.TEXT & ~filters.COMMAND, chatgpt_client.handle_gpt_message)
-                ],
-            },
-            fallbacks=[
-                CommandHandler("start", basic.start),
-                CallbackQueryHandler(basic.menu_callback, pattern="^(gpt_finish|main_menu)$")
-            ],
-            # per_message=True,
-        )
+        application.add_handler(CallbackQueryHandler(Quiz_handler.generate_theme_questions, pattern="quiz_theme_"))
+        application.add_handler(CallbackQueryHandler(Quiz_handler.generate_question_by_difficulty, pattern="difficulty_"))
+        application.add_handler(CallbackQueryHandler(Quiz_handler.verify_answer, pattern="question_answer_"))
 
-        application.add_handler(gpt_conversation)
-        application.add_handler(CallbackQueryHandler(random_fact.random_fact_callback, pattern="^random_"))
+        application.add_handler(CallbackQueryHandler(Quiz_handler.quiz_query_handler, pattern="^continue_quiz$"))
+        application.add_handler(CallbackQueryHandler(Quiz_handler.quiz_query_handler, pattern="^quiz_exit$"))
+        application.add_handler(CallbackQueryHandler(Quiz_handler.quiz_query_handler, pattern="^select_quiz_theme$"))
+
+        # application.add_handler(CallbackQueryHandler(meal_counter.start_meal_counter, pattern="^meal_counter$"))
+
         application.add_handler(CallbackQueryHandler(basic.menu_callback))
 
-        logger.info("Bot has started")
+        application.add_handler(MessageHandler(filters.TEXT | filters.AUDIO | filters.VOICE, message_router.message_router))
+
+        application.add_handler(CommandHandler("exit", chat_with_AI.stop_chat_mode))
+
+        application.add_handler(CommandHandler("exit_celebrity", chat_with_celebrity.exit_chat_with_celebrity))
+
+        logger.info("Chat bot was successfully started")
         application.run_polling()
-
     except Exception as e:
-        logger.error(f"Oops... Something went wrong - {e}")
+        logger.info(f"An error occurred while starting bot - {e}")
 
-if __name__ == "__main__":
+if __name__  == "__main__":
     main()
-
-        # application.add_handler(CallbackQueryHandler(button))
-        # application.run_polling()
-
-
-
