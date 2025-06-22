@@ -295,3 +295,30 @@ async def generate_playlist(genre: str, mood: str, era: str, duration: str) -> s
         logger.error(f"Error occurred in playlist generator - {e}")
         return "🛑🛑🛑 Failed to generate playlist. Try again later or use 🚀 /start 🛑🛑🛑"
 
+
+async def generate_user_cv(name, education, experience, stack):
+    prompt = (
+        f"You are an assistant who must make a CV for a person with name - {name} who has this kind of education - {education}"
+        f"He has this kind of work experience - {experience}. He has this technology stack - {stack}."
+        f"He is a very responsible and hardworking person, ready to learn and study something new if he does not know something."
+    )
+
+    try:
+        response = await client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            max_tokens=1000,
+            temperature=0.5,
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        )
+
+        result = response.choices[0].message.content.strip()
+        return result
+    except Exception as e:
+        logger.error(f"Error occurred in meal counting method - {e}")
+        return "🛑🛑🛑Failed to translate text. Try later or use 🚀 /start 🛑🛑🛑"
+

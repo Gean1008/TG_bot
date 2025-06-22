@@ -3,6 +3,7 @@ from telegram.ext import ContextTypes
 from . import chat_with_AI, chat_with_celebrity
 # from Handlers.Translator_handler import start_translator
 from handlers.playlist_generator import playlist_conversation
+from handlers.cv_generator import cv_conversation
 import logging
 
 logger = logging.getLogger(__name__)
@@ -16,6 +17,10 @@ async def message_router(update: Update, context:ContextTypes.DEFAULT_TYPE):
 
     if context.user_data.get("playlist_step") is not None:
         await playlist_conversation(update,context)
+        return
+
+    if context.user_data.get("cv_counter_step") is not None:
+        await cv_conversation(update, context)
         return
 
     # if message.voice or message.audio:

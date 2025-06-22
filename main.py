@@ -1,7 +1,7 @@
 import logging
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler,MessageHandler,filters
 from config import TG_BOT_TOKEN
-from handlers import basic, random_fact,chat_with_AI,chat_with_celebrity,Quiz_handler,message_router,playlist_generator
+from handlers import basic, random_fact,chat_with_AI,chat_with_celebrity,Quiz_handler,message_router,playlist_generator,cv_generator
 
 
 #Adding basic configuration for log actions in console
@@ -28,6 +28,8 @@ def main():
         application.add_handler(CallbackQueryHandler(Quiz_handler.quiz_query_handler, pattern="^select_quiz_theme$"))
 
         application.add_handler(CallbackQueryHandler(playlist_generator.start_playlist_conversation, pattern="^playlist_gen"))
+
+        application.add_handler(CallbackQueryHandler(cv_generator.start_cv, pattern="^generate_cv$"))
 
         application.add_handler(CallbackQueryHandler(basic.menu_callback))
 
