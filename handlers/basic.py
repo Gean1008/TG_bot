@@ -4,7 +4,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 from helpers.keyboards import get_main_menu_keyboard,get_one_more_fact_keyboard
 from helpers.texts import get_main_text_menu
-from handlers.Quiz_handler import start_quiz_with_user
+from handlers.quiz_handler import start_quiz_with_user
 
 logger = logging.getLogger(__name__)
 
@@ -49,12 +49,7 @@ async def menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             parse_mode='HTML'
         )
         await start_quiz_with_user(update, context)
-    # elif query.data == "start_translator":
-    #     await query.edit_message_text(
-    #         "<b>🌐 Translator </b> - function started\n\n"
-    #         "Give me an audio",
-    #         parse_mode='HTML'
-    #     )
+
     else:
         await start_menu_again(query)
 

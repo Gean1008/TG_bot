@@ -3,6 +3,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+"""набор кнопок с опционалами бота"""
 def get_main_menu_keyboard():
     buttons = [
             [InlineKeyboardButton("🎲 Random fact", callback_data="random_fact")],
@@ -15,6 +16,7 @@ def get_main_menu_keyboard():
     ]
     return InlineKeyboardMarkup(buttons)
 
+"""кнопки для опциона random fact"""
 def get_one_more_fact_keyboard():
     buttons = [
             [InlineKeyboardButton("🔁 One more fact", callback_data="random_more")],
@@ -22,6 +24,7 @@ def get_one_more_fact_keyboard():
     ]
     return InlineKeyboardMarkup(buttons)
 
+"""функция генерирующая набор кнопок с темами для квиза"""
 def get_buttons_for_themes(list):
     buttons = [
             [InlineKeyboardButton(f"🧠  {value} ", callback_data=f"quiz_theme_{index}")]
@@ -29,6 +32,7 @@ def get_buttons_for_themes(list):
     ]
     return InlineKeyboardMarkup(buttons)
 
+"""кнопки для выбора уровня сложности в квизе"""
 def get_difficulty_buttons():
     buttons = [
         [InlineKeyboardButton("🟢 Easy", callback_data="difficulty_easy")],
@@ -37,6 +41,7 @@ def get_difficulty_buttons():
     ]
     return InlineKeyboardMarkup(buttons)
 
+"""функция генерирующая набор кнопок с ответами в квизе"""
 def get_answers_buttons(list):
     buttons = [
         [InlineKeyboardButton(f"{index}. {value}", callback_data=f"question_answer_{value}")]
@@ -44,6 +49,7 @@ def get_answers_buttons(list):
     ]
     return InlineKeyboardMarkup(buttons)
 
+"""кнопки для выбора продолжить/выбрать другую тему/выйти в квизе"""
 def continue_quiz_exit():
     buttons = [
         [InlineKeyboardButton("🔁 One more question", callback_data="continue_quiz")],

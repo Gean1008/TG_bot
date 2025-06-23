@@ -1,10 +1,9 @@
 import logging
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler,MessageHandler,filters
 from config import TG_BOT_TOKEN
-from handlers import basic, random_fact,chat_with_AI,chat_with_celebrity,Quiz_handler,message_router,playlist_generator,cv_generator
+from handlers import basic, random_fact,chat_with_AI,chat_with_celebrity,quiz_handler,message_router,playlist_generator,cv_generator
 
 
-#Adding basic configuration for log actions in console
 logging.basicConfig(
     format="%(asctime)s - %(name)s -%(levelname)s -%(message)s", level=logging.INFO
 )
@@ -19,13 +18,13 @@ def main():
         application.add_handler(CommandHandler("random", random_fact.random_fact))
         application.add_handler(CallbackQueryHandler(random_fact.random_fact_callback, pattern="random_"))
 
-        application.add_handler(CallbackQueryHandler(Quiz_handler.generate_theme_questions, pattern="quiz_theme_"))
-        application.add_handler(CallbackQueryHandler(Quiz_handler.generate_question_by_difficulty, pattern="difficulty_"))
-        application.add_handler(CallbackQueryHandler(Quiz_handler.verify_answer, pattern="question_answer_"))
+        application.add_handler(CallbackQueryHandler(quiz_handler.generate_theme_questions, pattern="quiz_theme_"))
+        application.add_handler(CallbackQueryHandler(quiz_handler.generate_question_by_difficulty, pattern="difficulty_"))
+        application.add_handler(CallbackQueryHandler(quiz_handler.verify_answer, pattern="question_answer_"))
 
-        application.add_handler(CallbackQueryHandler(Quiz_handler.quiz_query_handler, pattern="^continue_quiz$"))
-        application.add_handler(CallbackQueryHandler(Quiz_handler.quiz_query_handler, pattern="^quiz_exit$"))
-        application.add_handler(CallbackQueryHandler(Quiz_handler.quiz_query_handler, pattern="^select_quiz_theme$"))
+        application.add_handler(CallbackQueryHandler(quiz_handler.quiz_query_handler, pattern="^continue_quiz$"))
+        application.add_handler(CallbackQueryHandler(quiz_handler.quiz_query_handler, pattern="^quiz_exit$"))
+        application.add_handler(CallbackQueryHandler(quiz_handler.quiz_query_handler, pattern="^select_quiz_theme$"))
 
         application.add_handler(CallbackQueryHandler(playlist_generator.start_playlist_conversation, pattern="^playlist_gen"))
 

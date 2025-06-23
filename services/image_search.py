@@ -1,3 +1,4 @@
+"""Модуль с функцией каторая ищет картинки на тему"""
 from serpapi import GoogleSearch
 import os
 import logging

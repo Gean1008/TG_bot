@@ -1,3 +1,4 @@
+""""Модуль с функциями для квиза"""
 import asyncio
 import logging
 from telegram import Update
@@ -10,6 +11,7 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
+"""Функция срабатывающая при нажатии на кнопку Quiz"""
 async def start_quiz_with_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         query = update.callback_query
@@ -36,6 +38,8 @@ async def start_quiz_with_user(update: Update, context: ContextTypes.DEFAULT_TYP
         logger.error(f"🛑🛑🛑An error occurred while AI generated response to user - {e}🛑🛑🛑")
         await query.message.edit_text(get_user_error_message())
 
+
+"""дополнительная функция обрабатывающая выбор темы квиза"""
 async def generate_theme_questions(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     try:
@@ -60,6 +64,8 @@ async def generate_theme_questions(update: Update, context: ContextTypes.DEFAULT
         logger.error(f"🛑🛑🛑An error occurred while AI generated response to user - {e}🛑🛑🛑")
         await query.message.edit_text(get_user_error_message())
 
+
+"""дополнительная функция обрабатывающая выбор уровня сложности квиза"""
 async def generate_question_by_difficulty(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         query = update.callback_query
@@ -96,6 +102,7 @@ async def generate_question_by_difficulty(update: Update, context: ContextTypes.
         await query.message.edit_text(get_user_error_message())
 
 
+"""дополнительная функция обрабатывающая ответ пользователя и проверяющая на правильность"""
 async def verify_answer(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         query = update.callback_query
@@ -132,6 +139,7 @@ async def verify_answer(update: Update, context: ContextTypes.DEFAULT_TYPE):
         logger.error(f"🛑🛑🛑An error occurred while AI verified answer - {e}🛑🛑🛑")
         await query.message.edit_text(get_user_error_message())
 
+"""дополнительная функция обрабатывающая выбор пользователя если он хочет выйти из квиза, продолжить изменить тему"""
 async def quiz_query_handler(update: Update, context:ContextTypes.DEFAULT_TYPE):
     try:
         query = update.callback_query
@@ -148,6 +156,7 @@ async def quiz_query_handler(update: Update, context:ContextTypes.DEFAULT_TYPE):
         logger.error(f"🛑🛑🛑An error occurred in quiz query handler - {e}🛑🛑🛑")
         await query.message.edit_text(get_user_error_message())
 
+"""дополнительная функция для выхода из квиза"""
 async def quiz_exit(update: Update, context:ContextTypes.DEFAULT_TYPE):
     try:
         query = update.callback_query
@@ -179,7 +188,7 @@ async def quiz_exit(update: Update, context:ContextTypes.DEFAULT_TYPE):
         logger.error(f"🛑🛑🛑An error occurred in quiz exit - {e}🛑🛑🛑")
         await query.message.edit_text(get_user_error_message())
 
-
+"""дополнительная функция для выбора темы из предложенных"""
 async def choose_new_quiz_theme(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         query = update.callback_query
